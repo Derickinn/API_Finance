@@ -33,9 +33,9 @@ def buscar_ticker_fii():
 
     ticker = input("Digite o ticker do FII: (Exemplo: HGLG11, VISC11, JPPA11): ").upper()
     
-    meta_data, cotacao = formula_cotacao_br(ticker)
+    ticker, close_price, pvp, dividend_yield_ttm = formula_cotacao_fii(ticker)
 
-    print(f"\nA cotação atual do FII {meta_data['symbol']} é: $ {cotacao:.2f}")
+    print(f"\nA cotação atual do FII {ticker['ticker']} é: $ {close_price:.2f}, P/Vp: {pvp['pvp']:.2f}, DY: {dividend_yield_ttm['dividend_yield_ttm']:.2f}%")
 
 def formula_cotacao(ticker):
 
@@ -80,3 +80,30 @@ def formula_cotacao_br(ticker):
     resultado = dados["results"][0]
 
     return resultado, float(resultado.get("regularMarketPrice"))
+
+def formula_cotacao_fii(ticker):
+
+    url_fii = f"https://api.usebolsai.com/api/v1/fiis/{ticker}"
+
+    API_FII_KEY = os.getenv("BOLSAI_TOKEN")
+
+    headers = {
+
+         "X-API-Key": API_FII_KEY
+
+    }
+    
+    resposta = requests.get(url_fii, headers=headers)
+
+    dados = resposta.json()
+
+    resultado = dados
+
+    return (
+
+        resultado,
+        float(resultado.get("close_price")),
+        {"pvp": float(resultado.get("pvp"))},
+        {"dividend_yield_ttm": float(resultado.get("dividend_yield_ttm"))}
+
+    )
