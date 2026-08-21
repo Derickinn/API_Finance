@@ -1,14 +1,5 @@
-import requests, os
-from dotenv import load_dotenv
-from busca_ticker import buscar_ticker_stock, buscar_ticker_crypto
 
-load_dotenv()
-
-API_KEY = os.getenv("TWELVE_DATA_KEY")
-
-API_BR_KEY = os.getenv("BRAPI_TOKEN")
-
-url = "https://api.twelvedata.com/time_series"
+from busca_ticker import buscar_ticker_stock, buscar_ticker_crypto, buscar_ticker_br, buscar_ticker_fii
 
 print("\nBem-vindo ao programa de busca de cotações!")
 
@@ -20,13 +11,15 @@ while True:
 
         1 : buscar_ticker_stock,
         2 : buscar_ticker_crypto,
-        3 : exit
+        3 : buscar_ticker_br,
+        4 : buscar_ticker_fii,
+        5 : exit
 
     }
 
     try:
 
-        escolha = int(input("\n(1) Ações\n(2) Criptomoedas\n(3) Sair\nEscolha uma opção: "))
+        escolha = int(input("\n(1) Ações\n(2) Criptomoedas\n(3) Ações Brasileiras\n(4) FII\n(5) Sair\nEscolha uma opção: "))
 
     except ValueError:
 

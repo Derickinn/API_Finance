@@ -1,20 +1,17 @@
 import requests
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+API_BR_KEY = os.getenv("BRAPI_TOKEN")
+url_br = f"https://brapi.dev/api/quote/{{ticker}}"
 
-url = "https://api.twelvedata.com/symbol_search"
 
-API_KEY = os.getenv("TWELVE_DATA_KEY")
+def buscar_ticker_stock(ticker):
 
-params = {
+    url = f"https://brapi.dev/api/quote/{ticker}"
 
-    "symbol": "MXRF11",
-    "apikey": API_KEY
-}
+    resposta = requests.get(url)
 
-resposta = requests.get(url, params=params)
+    print("Status:", resposta.status_code)
+    print("Resposta:", resposta.json())
 
-print(resposta.status_code)
-print(resposta.json())
+buscar_ticker_stock("AAPL")  # Exemplo de uso da função com o ticker "AAPL"
