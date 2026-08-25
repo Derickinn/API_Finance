@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+#Teste
+
 def conectar_bd():
 
     try:
