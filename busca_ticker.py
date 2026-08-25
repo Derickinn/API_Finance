@@ -1,3 +1,5 @@
+from ast import Return
+
 import requests, os
 from dotenv import load_dotenv    
 
@@ -99,11 +101,12 @@ def formula_cotacao_fii(ticker):
 
     resultado = dados
 
+
     return (
 
-        resultado,
-        float(resultado.get("close_price")),
-        {"pvp": float(resultado.get("pvp"))},
-        {"dividend_yield_ttm": float(resultado.get("dividend_yield_ttm"))}
+            resultado,
+            float(resultado.get("close_price")),
+            {"pvp": float(resultado.get("pvp"))},
+            {"dividend_yield_ttm": float(resultado.get("dividend_yield_ttm"))}
 
-    )
+        )

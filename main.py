@@ -1,7 +1,12 @@
 
 from busca_ticker import buscar_ticker_stock, buscar_ticker_crypto, buscar_ticker_br, buscar_ticker_fii
+from conexaoBD import conectar_bd, visualizar_ativos
 
 print("\nBem-vindo ao programa de busca de cotações!")
+
+conectar_bd()
+
+visualizar_ativos()
 
 while True:
 
@@ -31,7 +36,15 @@ while True:
 
     if funcoes:
 
-        funcoes()
+        try:
+
+            funcoes()
+
+        except Exception as e:
+
+            print(f"\n🔴 Ocorreu um erro ao buscar a cotação. Por favor, tente novamente.🔴")
+
+            continue
 
         print("\nDeseja realizar outra consulta?")
 
