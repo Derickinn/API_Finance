@@ -41,3 +41,25 @@ def visualizar_ativos():
             for ativo in ativos:
 
                 print(ativo)
+
+def cadastrar_ativo(ticker, tipo, preco):
+
+    if tipo == "stock" or tipo == "ação" or tipo == "cripto":
+
+        with conectar_bd() as conn:
+
+            with conn.cursor() as cur:
+
+                cur.execute("INSERT INTO ativos (ticker, tipo, preco) values (%s, %s, %s)", (ticker, tipo, preco))
+
+                conn.commit()
+
+    if tipo == "Fii" :
+
+        with conectar_bd() as conn:
+
+            with conn.cursor() as cur:
+
+                cur.execute("INSERT INTO ativos (ticker, tipo, preco) values (%s, %s, %s)", (ticker, tipo, preco))
+
+                conn.commit()

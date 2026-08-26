@@ -1,4 +1,5 @@
 from ast import Return
+from conexaoBD import cadastrar_ativo
 
 import requests, os
 from dotenv import load_dotenv    
@@ -13,6 +14,12 @@ def buscar_ticker_stock():
 
     print(f"\nA cotação atual do stock {meta_data['symbol']} é: $ {cotacao:.2f}")
 
+    preco = f"{cotacao:.2f}"
+
+    tipo = "stock"
+
+    cadastrar_ativo(ticker, tipo, preco)
+
 def buscar_ticker_crypto():
 
     ticker = input("Digite o ticker da criptomoeda: (Exemplo: BTC, ETH, XRP): ").upper()
@@ -23,6 +30,12 @@ def buscar_ticker_crypto():
 
     print(f"\nA cotação atual da criptomoeda {meta_data['symbol']} é: $ {cotacao:.2f}")
 
+    preco = f"{cotacao:.2f}"
+    
+    tipo = "cripto"
+    
+    cadastrar_ativo(ticker, tipo, preco)
+
 def buscar_ticker_br():
 
     ticker = input("Digite o ticker da ação: (Exemplo: BBAS3, VALE3, ITUB4): ").upper()
@@ -31,13 +44,25 @@ def buscar_ticker_br():
 
     print(f"\nA cotação atual da ação {meta_data['symbol']} é: $ {cotacao:.2f}")
 
+    preco = f"{cotacao:.2f}"
+        
+    tipo = "ação"
+        
+    cadastrar_ativo(ticker, tipo, preco)
+
 def buscar_ticker_fii():
 
     ticker = input("Digite o ticker do FII: (Exemplo: HGLG11, VISC11, JPPA11): ").upper()
     
-    ticker, close_price, pvp, dividend_yield_ttm = formula_cotacao_fii(ticker)
+    ticker, close_price, pvp = formula_cotacao_fii(ticker)
 
-    print(f"\nA cotação atual do FII {ticker['ticker']} é: $ {close_price:.2f}, P/Vp: {pvp['pvp']:.2f}, DY: {dividend_yield_ttm['dividend_yield_ttm']:.2f}%")
+    print(f"\nA cotação atual do FII {ticker['ticker']} é: $ {close_price:.2f}, P/Vp: {pvp['pvp']:.2f}")
+
+    preco = f"{close_price:.2f}"
+            
+    tipo = "Fii"
+            
+    cadastrar_ativo(ticker, tipo, preco)
 
 def formula_cotacao(ticker):
 
@@ -101,12 +126,10 @@ def formula_cotacao_fii(ticker):
 
     resultado = dados
 
-
     return (
 
-            resultado,
+            str(resultado.get("ticker")),
             float(resultado.get("close_price")),
-            {"pvp": float(resultado.get("pvp"))},
-            {"dividend_yield_ttm": float(resultado.get("dividend_yield_ttm"))}
+            float(resultado.get("pvp")),
 
         )
