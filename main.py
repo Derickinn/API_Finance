@@ -1,6 +1,6 @@
 
 from busca_ticker import buscar_ticker_stock, buscar_ticker_crypto, buscar_ticker_br, buscar_ticker_fii
-from conexaoBD import conectar_bd, visualizar_ativos
+from conexaoBD import conectar_bd, visualizar_ativos, excluir_ativo
 
 print("\nBem-vindo ao programa de busca de cotações!")
 
@@ -12,7 +12,7 @@ while True:
 
     try:
 
-        escolhas = int(input("\n(1) Consultar ativos \n(2) Adicionar ativos \n(3) Sair\nEscolha uma opção: "))
+        escolhas = int(input("\n(1) Consultar ativos \n(2) Adicionar ativos\n(3) Apagar Ativo \n(4) Sair\nEscolha uma opção: "))
 
         if escolhas == 1:
 
@@ -20,7 +20,7 @@ while True:
 
         elif escolhas == 2: 
 
-            print("\nDigite o tipo de ticker que deseja consultar:")
+            print("\nDigite o tipo de ticker que deseja adicionar:")
             
             opcoes = {
             
@@ -32,31 +32,19 @@ while True:
             
             }
             
-            try:
-            
-                escolha = int(input("\n(1) Ações\n(2) Criptomoedas\n(3) Ações Brasileiras\n(4) FII\n(5) Sair\nEscolha uma opção: "))
-            
-            except ValueError:
-            
-                print("\n🔴 Opção inválida. Por favor, escolha uma opção válida.🔴")
-            
-                continue
+            escolha = int(input("\n(1) Ações\n(2) Criptomoedas\n(3) Ações Brasileiras\n(4) FII\n(5) Sair\nEscolha uma opção: "))
             
             funcoes = opcoes.get(escolha)
             
             if funcoes:
             
-                try:
-            
-                    funcoes()
-            
-                except Exception as e:
-            
-                    print(f"\n🔴 Ocorreu um erro ao buscar a cotação. Por favor, tente novamente. {e}🔴")
-            
-                    continue
+                funcoes()
 
         elif escolhas == 3:
+
+            excluir_ativo(id)
+
+        elif escolhas == 4:
 
             break
 
